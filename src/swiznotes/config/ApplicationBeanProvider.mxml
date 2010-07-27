@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+// Copyright 2010 Michael Schmalle - Teoti Graphix, LLC
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0 
+// 
+// Unless required by applicable law or agreed to in writing, software 
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License
+// 
+// Author: Michael Schmalle, Principal Architect
+// mschmalle at teotigraphix dot com
+-->
+<!--- 
+* The startup models, controllers and services configuration.
+* 
+* @author Michael Schmalle
+* @source
+-->
+<swiz:BeanProvider xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx"
+				   xmlns:swiz="http://swiz.swizframework.org"
+				   xmlns:controller="swiznotes.controller.*" 
+				   xmlns:model="swiznotes.model.*"
+				   xmlns:presentation="swiznotes.presentation.*"
+				   xmlns:services="swiznotes.services.*" 
+				   xmlns:vo="swiznotes.model.vo.*">
+	
+	<fx:Declarations>
+		
+		<mx:ArrayCollection id="colorProvider">
+			<!-- White -->
+			<vo:BackgroundColor name="White">
+				<mx:LinearGradient>
+					<s:GradientEntry color="0xFFFFFF"/>
+					<s:GradientEntry color="0xFFFFFF"/>
+				</mx:LinearGradient>
+			</vo:BackgroundColor>
+			<!-- Blue -->
+			<vo:BackgroundColor name="Blue">
+				<mx:LinearGradient>
+					<s:GradientEntry color="0xDAF6FA"/>
+					<s:GradientEntry color="0xC1F0F7"/>
+				</mx:LinearGradient>
+			</vo:BackgroundColor>
+			<!-- Green -->
+			<vo:BackgroundColor name="Green">
+				<mx:LinearGradient>
+					<s:GradientEntry color="0xD1FECB" alpha="0.9"/>
+					<s:GradientEntry color="0xCCFEC5" alpha="0.85"/>
+				</mx:LinearGradient>
+			</vo:BackgroundColor>
+			<!-- Pink -->
+			<vo:BackgroundColor name="Pink">
+				<mx:LinearGradient>
+					<s:GradientEntry color="0xF6D0F6"/>
+					<s:GradientEntry color="0xF4C6F4"/>
+				</mx:LinearGradient>
+			</vo:BackgroundColor>
+			<!-- Purple -->
+			<vo:BackgroundColor name="Purple">
+				<mx:LinearGradient>
+					<s:GradientEntry color="0xE4DAF6"/>
+					<s:GradientEntry color="0xE0D5F4"/>
+				</mx:LinearGradient>
+			</vo:BackgroundColor>
+			<!-- Yellow -->
+			<vo:BackgroundColor name="Yellow">
+				<mx:LinearGradient>
+					<s:GradientEntry color="0xFDFDCB"/>
+					<s:GradientEntry color="0xFCF9A1"/>
+				</mx:LinearGradient>
+			</vo:BackgroundColor>
+		</mx:ArrayCollection>
+		
+		<fx:Array id="fontFamilyProvider"> 
+			<fx:String>_sans</fx:String>
+			<fx:String>_serif</fx:String>
+			<fx:String>_typewriter</fx:String>
+			<fx:String>Arial</fx:String>
+			<fx:String>Courier</fx:String>
+			<fx:String>Courier New</fx:String>
+			<fx:String>Geneva</fx:String>
+			<fx:String>Georgia</fx:String>
+			<fx:String>Helvetica</fx:String>
+			<fx:String>Times New Roman</fx:String>
+			<fx:String>Times</fx:String>
+			<fx:String>Verdana</fx:String>
+		</fx:Array>
+		
+		<fx:Array id="fontSizeProvider"> 
+			<fx:Number>8</fx:Number>
+			<fx:Number>9</fx:Number>
+			<fx:Number>10</fx:Number>
+			<fx:Number>11</fx:Number>
+			<fx:Number>12</fx:Number>
+			<fx:Number>14</fx:Number>
+			<fx:Number>16</fx:Number>
+			<fx:Number>18</fx:Number>
+			<fx:Number>20</fx:Number>
+			<fx:Number>22</fx:Number>
+			<fx:Number>24</fx:Number>
+			<fx:Number>26</fx:Number>
+			<fx:Number>28</fx:Number>
+			<fx:Number>36</fx:Number>
+			<fx:Number>42</fx:Number>
+			<fx:Number>72</fx:Number>
+		</fx:Array>
+		
+		<!-- The model for the WindowedApplication. -->
+		<model:ApplicationModel id="applicationModel"/>
+		
+		<!-- The model for the Note instances. -->
+		<model:NoteModel id="noteModel" 
+						 colorProvider="{colorProvider}"
+						 fontFamilyProvider="{fontFamilyProvider}"
+						 fontSizeProvder="{fontSizeProvider}"/>
+		
+		<!-- The file storage for the application's XML memento. -->
+		<services:FileStorage id="fileStorage" name="noteConfig.xml"/>
+		
+		<!-- The main controller for the WindowedApplication instance. -->
+		<controller:ApplicationController id="applicationController"/>
+		
+		<!-- The main controller for the Note collection and instances. -->
+		<controller:NoteController id="noteController"/>
+		
+		<!-- The main presentation model/manager for ALL NotePad instances. -->
+		<presentation:NotePadManager id="notePadManager"/>
+		
+	</fx:Declarations>
+	
+</swiz:BeanProvider>

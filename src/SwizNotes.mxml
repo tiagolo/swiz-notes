@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+// Copyright 2010 Michael Schmalle - Teoti Graphix, LLC
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0 
+// 
+// Unless required by applicable law or agreed to in writing, software 
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License
+// 
+// Author: Michael Schmalle, Principal Architect
+// mschmalle at teotigraphix dot com
+-->
+<!--- 
+* The SwizNotes application main.
+* 
+* <p>Version 1.0 functionality;</p>
+* <ul>
+* <li>Custom skinned NotePad Window component.</li>
+* <li>XML Memento pattern for note persistence.</li>
+* <li>Maintained z depth order when saved.</li>
+* <li>Maintained x, y, width and height.</li>
+* <li>Maintained note background color selection.</li>
+* <li>Body context menu (text actions, change note color)</li>
+* </ul>
+* 
+* @author Michael Schmalle
+* @copyright Teoti Graphix, LLC
+-->
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" 
+					   xmlns:swiz="http://swiz.swizframework.org" 
+					   xmlns:config="swiznotes.config.*"
+					   xmlns:logging="org.swizframework.utils.logging.*"
+					   addedToStage="{visible = false}">
+	
+	<fx:Declarations>
+		
+		<!--- @swiz -->
+		<swiz:Swiz id="mySwiz">
+			
+			<swiz:beanProviders>
+				
+				<swiz:BeanProvider>
+					
+					<!---
+					* A startup configuration that can be shared during runtime.
+					* @swizprovider
+					-->
+					<config:ApplicationConfig id="applicationConfig"
+											  autoExit="true"
+											  autoSave="true"
+											  autoSaveDuration="50000"/>
+					
+				</swiz:BeanProvider>
+				
+				<!-- 
+				The application's main startup configuration that will be
+				injected into the rest of the application through it's life cycle.
+				-->
+				<config:ApplicationBeanProvider/>
+				
+			</swiz:beanProviders>
+			
+			<swiz:config>
+				
+				<!---
+				In this specific application we are not using majic view
+				injection, the NoteController takes care of setting up and 
+				tearing down the Bean for each SwizNotePad window.
+				@swizconfig
+				-->
+				<swiz:SwizConfig id="appConfig" 
+								 eventPackages="swiznotes.events"/>
+				
+			</swiz:config>
+			
+			<swiz:loggingTargets>
+				
+				<!-- 
+				Add trace output to the application through the console 
+				-->
+				<logging:SwizTraceTarget/>
+				
+			</swiz:loggingTargets>
+			
+		</swiz:Swiz>
+		
+	</fx:Declarations>
+	
+</s:WindowedApplication>

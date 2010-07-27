@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+// Copyright 2010 Michael Schmalle - Teoti Graphix, LLC
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0 
+// 
+// Unless required by applicable law or agreed to in writing, software 
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License
+// 
+// Author: Michael Schmalle, Principal Architect
+// mschmalle at teotigraphix dot com
+-->
+<!--- 
+* The SiwzNotes implementation of the NotePad window.
+* 
+* @author Michael Schmalle
+* @source
+-->
+<components:NotePad xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					xmlns:s="library://ns.adobe.com/flex/spark" 
+					xmlns:mx="library://ns.adobe.com/flex/mx" 
+					xmlns:components="swiznotes.components.*"
+					skinClass="swiznotes.skins.NotePadSkin"
+					resizeAffordanceWidth="20"
+					creationCompleteEffect="{fadeIn}"
+					closeEffect="{fadeOut}"
+					showEffect="{fadeIn}"
+					hideEffect="{fadeOut}"
+					newClick="this_newClickHandler(event)"
+					closeClick="this_closeClickHandler(event)"
+					notePadFocus="this_notePadFocusHandler(event)"
+					textChange="this_textChangeHandler(event)"
+					contextMenuContribute="this_contextMenuContributeHandler(event)"
+					focusIn="this_focusInHandler(event)">
+	
+	<fx:Declarations>
+		<s:Fade id="fadeIn" target="{this}" alphaFrom="0" alphaTo="1"/>
+		<s:Fade id="fadeOut" target="{this}" alphaFrom="1" alphaTo="0"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import swiznotes.events.NoteEvent;
+			import swiznotes.events.NotePadEvent;
+			import swiznotes.skins.NotePadSkin;
+			
+			[Dispatcher]
+			public var dispatcher:IEventDispatcher;
+			
+			/**
+			 * @private
+			 */
+			protected function this_newClickHandler(event:NotePadEvent):void
+			{
+				dispatcher.dispatchEvent(new NoteEvent(NoteEvent.NOTE_CREATE));
+			}
+			
+			/**
+			 * @private
+			 */
+			protected function this_notePadFocusHandler(event:NotePadEvent):void
+			{
+				dispatcher.dispatchEvent(new NoteEvent(NoteEvent.NOTE_CHANGE_REQUESTED, note));
+			}
+			
+			/**
+			 * @private
+			 */
+			protected function this_textChangeHandler(event:NotePadEvent):void
+			{
+				note.text = textAreaDisplay.text;
+			}
+			
+			/**
+			 * @private
+			 */
+			protected function this_focusInHandler(event:FocusEvent):void
+			{
+				if (!dispatcher)
+					return;
+				
+				dispatcher.dispatchEvent(new NoteEvent(NoteEvent.NOTE_CHANGE_REQUESTED, note));
+			}
+			
+			/**
+			 * @private
+			 */
+			protected function this_contextMenuContributeHandler(event:NotePadEvent):void
+			{
+				dispatcher.dispatchEvent(event);
+			}
+			
+			/**
+			 * @private
+			 */
+			protected function this_closeClickHandler(event:NotePadEvent):void
+			{
+				dispatcher.dispatchEvent(new NoteEvent(NoteEvent.NOTE_CLOSE_CLICK_REQUESTED, note));
+			}
+
+		]]>
+	</fx:Script>
+	
+	<!-- The default 'backgroundGradient' style. -->
+	<components:backgroundGradient>
+		<s:LinearGradient>
+			<s:GradientEntry color="#FFFFFF"/>
+			<s:GradientEntry color="#FFFFFF"/>
+		</s:LinearGradient>
+	</components:backgroundGradient>
+	
+</components:NotePad>

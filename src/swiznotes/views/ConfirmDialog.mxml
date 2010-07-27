@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+// Copyright 2010 Michael Schmalle - Teoti Graphix, LLC
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0 
+// 
+// Unless required by applicable law or agreed to in writing, software 
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License
+// 
+// Author: Michael Schmalle, Principal Architect
+// mschmalle at teotigraphix dot com
+-->
+<!--- 
+* @author Michael Schmalle
+* @source
+-->
+<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" 
+		  title="Swiz Notes"
+		  minimizable="false"
+		  maximizable="false"
+		  resizable="false"
+		  showStatusBar="false"
+		  windowActivate="this_windowActivateHandler(event)"
+		  width="400" height="120">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.AIREvent;
+			
+			import swiznotes.events.ConfirmationEvent;
+			import swiznotes.model.vo.Note;
+			
+			public var note:Note;
+			
+			protected function confirmClick(confirmed:Boolean):void
+			{
+				dispatchEvent(new ConfirmationEvent(
+					ConfirmationEvent.CONFIRM, note, confirmed));
+			}
+			
+			protected function this_windowActivateHandler(event:AIREvent):void
+			{
+				noButton.setFocus();
+			}
+
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	
+	<s:Group width="100%" minHeight="75" height="100%">
+		
+		<s:Rect top="0" right="0" bottom="0" left="0">
+			
+			<s:fill>
+				<s:SolidColor color="#FFFFFF"/>
+			</s:fill>
+			
+		</s:Rect>
+		
+		<s:Label text="Delete Note" 
+				 fontSize="15" 
+				 top="15" left="15"/>
+		
+		<s:Label text="Are you sure you want to delete this note?"
+				 top="45" left="15"/>
+		
+	</s:Group>
+	
+	<s:Rect height="1" width="100%">
+		
+		<s:fill>
+			<s:SolidColor color="#DFDFDF"/>
+		</s:fill>
+		
+	</s:Rect>
+	
+	<s:BorderContainer width="100%" height="40" 
+					   borderVisible="false"
+					   backgroundColor="#F0F0F0">
+		
+		<s:layout>
+			<s:HorizontalLayout horizontalAlign="right" 
+								verticalAlign="middle"
+								paddingRight="10"/>
+		</s:layout>
+		
+		<s:Button id="yesButton" 
+				  label="Yes"
+				  click="confirmClick(true)"
+				  width="75"/>
+		
+		<s:Button id="noButton" 
+				  label="No"
+				  emphasized="true"
+				  click="confirmClick(false)"
+				  width="75"/>
+		
+	</s:BorderContainer>
+	
+</s:Window>
